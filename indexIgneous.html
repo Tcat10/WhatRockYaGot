@@ -1,0 +1,237 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by TEMPLATED
+http://templated.co
+Released for free under the Creative Commons Attribution License
+Name       : MetroBiz 
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20140207
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>What Rock Ya Got - Igneous</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+</head>
+<body>
+<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1 style="color : white;">What Rock Ya Got</h1>
+			<span>Igneous Rock</span>
+		</div>
+		<p style="background-color : white; color : white">nosey little fucker aren't ya</p>
+	</div>
+</div>
+<div id="wrapper2" class="container">
+
+		<script language="JavaScript">
+            <!--
+            function silentErrorHandler() {return true;}
+            window.onerror=silentErrorHandler;
+            //-->
+            
+            /**
+             * Produce and run through data trees for rocks!
+             *
+             * @author Lars Dreith
+             * October 7th, 2017
+             */
+            
+            
+             //imported from code.stephenmorley.org
+            function Queue(){var a=[],b=0;this.getLength=function(){return a.length-b};this.isEmpty=function(){return 0==a.length};this.enqueue=function(b){a.push(b)};this.dequeue=function(){if(0!=a.length){var c=a[b];2*++b>=a.length&&(a=a.slice(b),b=0);return c}};this.peek=function(){return 0<a.length?a[b]:void 0}};
+            
+            
+            // produce a button object
+            function newButton(text){
+                var btn = document.createElement("Button");
+                var t = document.createTextNode(text);
+                btn.appendChild(t);
+                return btn;
+            }
+            
+            // One cycle of our program
+            function buttonNamesArray(node){
+                
+                // print out question from node //
+                var q = document.createElement("h1");
+                var t = document.createTextNode(node.data[2]);
+                q.appendChild(t);
+                document.body.insertBefore(q, document.getElementById("copyright"));
+						
+                
+                console.log(node.children);
+                list = node.children;
+                
+                // make buttons for each child of node //
+                
+                // basically copied from some random stack exchange website lol
+                var funcs = [];
+                function createfunc(i){
+                    return eventThing(i, node);
+                }
+                for( var i = 0; i < node.children.length; i++){
+                    funcs[i] = createfunc(i);
+                }
+                for (var j = 0; j < node.children.length; j++){
+                    funcs[j]();
+                }    
+            }
+            
+            // a function so that the other function doesn't actually become incomprehensible
+            function eventThing(i, node){
+                    next = node.children[i];
+                    let option = newButton(next.data[1]);
+                    document.body.insertBefore(option, document.getElementById("copyright"));
+                    option.setAttribute("class", "button");
+                    option.id = node.children[i].data[0];
+                    //option.setAttribute("onClick", "execute()");
+                    console.log(node);
+                    (function(){
+                        document.getElementById(node.children[i].data[0]).addEventListener('click', function(){handleClick(node.children[i]);});
+                    }());
+            }
+            
+            // A function so that the other function doesn't actually become incomprehensible
+            function handleClick( nodeChild){
+                console.log(nodeChild);
+                document.getElementById(nodeChild.data[0]).style.background = '#9b9b9b';
+                
+                // stops old buttons from being clicked
+                var x = document.getElementsByClassName("button");
+                for( i = 0; i < x.length; i++ ){
+                    var clone = x[i].cloneNode();
+                    while (x[i].firstChild) {
+                        clone.appendChild(x[i].lastChild);
+                    }
+                    x[i].parentNode.replaceChild(clone, x[i]);
+                }
+                
+                buttonNamesArray(nodeChild);
+            }
+            
+            // line break constant... necessary???
+            const br = document.createElement("br");
+                 //      Node, Tree, and their relevant methods to build the data tree!      //
+            function Node(data){
+                this.data = data;
+                this.parent = null;
+                this.children = [];
+            }
+            
+            function Tree(data){
+                var node = new Node(data);
+                this._root = node;
+            }
+            
+            
+            Tree.prototype.traverseBF = function(callback) {
+                var queue = new Queue();
+     
+                queue.enqueue(this._root);
+ 
+                currentTree = queue.dequeue();
+ 
+                while(currentTree){
+                    for (var i = 0, length = currentTree.children.length; i < length; i++) {
+                        queue.enqueue(currentTree.children[i]);
+                    }
+ 
+                    callback(currentTree);
+                    currentTree = queue.dequeue();
+                }
+            };
+            
+            Tree.prototype.contains = function(callback, traversal) {
+                traversal.call(this, callback);
+            };
+            
+            Tree.prototype.add = function(data, toData) {
+                var child = new Node(data),
+                    parent = null,
+                    callback = function(node) {
+                        if (node.data[0] === toData) {
+                            parent = node;
+                        }
+                };
+ 
+                this.contains(callback, tree.traverseBF);
+ 
+                if (parent) {
+                    parent.children.push(child);
+                    child.parent = parent;
+                } else {
+                    throw new Error('Cannot add node to a non-existent parent.');
+                }
+            };
+            
+                        //      The Thing that does the things      //
+            // declaring our data tree
+            var tree = new Tree(["root", "", "What kind of rock do you have?"]);
+            // calling the root of our data tree
+
+            
+            
+            //      Library     //
+            
+            tree.add(["Igneous_1", "Igneous", "Surface of this rock?"], "root");
+            
+            //      Igneous Rocks       //
+            
+            tree.add(["CoarseGrain_2", "Coarse Grained (seen by eyes)", "How about these?"], "Igneous_1");
+            tree.add(["FineGrain_2", "Fine Grained", "What about these?"], "Igneous_1");
+            tree.add(["Glassy_2", "Glassy", "..."], "Igneous_1");
+            tree.add(["LargeCrystals_2", "Large Cystals (Inside Mass)", "Color?"], "Igneous_1");
+            tree.add(["Vesicular_2", "Vesicular (full of holes)", "..."], "Igneous_1");
+            
+            tree.add(["LightGreen_3", "Light Green", "Peridotite"], "CoarseGrain_2");
+            tree.add(["InterColor_3", "Intermediate Color", "..."], "CoarseGrain_2");
+            tree.add(["DarkColor_3", "Dark Color", "..."], "CoarseGrain_2");
+            
+            tree.add(["Pepper&Salt_4", "Pepper & Salt, black 50/50", "Diorite"], "InterColor_3");
+            tree.add(["DarkGray_4", "Dark Gray to Black", "Grabbro"], "DarkColor_3");
+            
+            tree.add(["LightFine_3", "Light Color", "..."], "FineGrain_2");
+            tree.add(["InterFine_3", "Intermediate Color", "..."], "FineGrain_2");
+            tree.add(["DarkFine_3", "Dark Color", "..."], "FineGrain_2");
+            
+            tree.add(["WGP_4", "White, Gray, Pink", "Rhyoite"], "LightFine_3");
+            tree.add(["DG_4", "Dark Gray (can vary)", "Andesite"], "InterFine_3");
+            tree.add(["DG2_4", "Dark Gray to Black", "Basalt"], "DarkFine_3");
+            
+            tree.add(["BRB_3", "Black, Red, Brown", "..."], "Glassy_2");
+            
+            tree.add(["Breaks_4", "Breaks along smooth surface", "Obsidian"], "BRB_3");
+            
+            tree.add(["LightCrystal_3", "Light", "Rhvoite Porphory"], "LargeCrystals_2");
+            tree.add(["InterCrystal_3", "Intermediate", "Andesite Porpyry"], "LargeCrystals_2");
+            tree.add(["DarkCrystal_3", "Dark", "Basalt Porpury"], "LargeCrystals_2");
+            
+            tree.add(["LightVes_3", "Light color & weight", "..."], "Vesicular_2");
+            tree.add(["DarkVes_3", "Dark Color", "How heavy?"], "Vesicular_2");
+            
+            tree.add(["WTGVes_4", "White to Gray", "Pumice"], "LightVes_3");
+            
+            tree.add(["LWVes_4", "Light Weight", "Scoria"], "DarkVes_3");
+            tree.add(["HeavyVes_4", "Heavy", "Vesicular Basalt \n"], "DarkVes_3");
+
+            buttonNamesArray(tree._root.children[0]);
+        </script>
+
+</div>
+
+<div id="copyright" class="container">
+	<p>&copy; Made by team JavaThehutt | Kent Hackathon | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
+</body>
+</html>
