@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!--
 Design by TEMPLATED
@@ -68,27 +67,16 @@ Released   : 20140207
                 return btn;
             }
             
-	    function word(data){
-		// print out question from node //
-                var q = document.createElement("h1");
-                var t = document.createTextNode(data);
-                q.appendChild(t);
-                document.getElementById("wrapper2").appendChild(q);
-	    }
-			
-	    function pic(data){
-		    var q = document.createElement("IMG");
-		    img.src = data[0];
-		    document.getElementById("wrapper2").appendChild(q);
-	    }
-			
             // One cycle of our program
             function buttonNamesArray(node){
-                if (typeof node.data[2] == 'string'){
-			word(node.data[2]);
-		} else {
-			pic(node.data[2]);
-		}
+                
+                // print out question from node //
+                var q = document.createElement("h1");
+                var t = document.createTextNode(node.data[2]);
+                q.appendChild(t);
+               
+				//!!!
+				document.getElementById("wrapper2").appendChild(q);
 		
 		window.scrollTo(0,document.body.scrollHeight);
                 
@@ -114,7 +102,8 @@ Released   : 20140207
             function eventThing(i, node){
                     next = node.children[i];
                     let option = newButton(next.data[1]);
-                    document.getElementById("wrapper2").appendChild(option);
+                   // !!
+				document.getElementById("wrapper2").appendChild(option);
                     option.setAttribute("class", "button");
                     option.id = node.children[i].data[0];
                     //option.setAttribute("onClick", "execute()");
@@ -205,46 +194,49 @@ Released   : 20140207
             
             //      Library     //
             
-            tree.add(["Igneous_1", "Igneous", "Surface of this rock?"], "root");
+            tree.add(["Igneous_1", "Igneous", "What is the surface appearance?"], "root");
             
             //      Igneous Rocks       //
             
-            tree.add(["CoarseGrain_2", "Coarse Grained (seen by eyes)", "How about these?"], "Igneous_1");
-            tree.add(["FineGrain_2", "Fine Grained", "What about these?"], "Igneous_1");
-            tree.add(["Glassy_2", "Glassy", "..."], "Igneous_1");
-            tree.add(["LargeCrystals_2", "Large Cystals (Inside Mass)", "Color?"], "Igneous_1");
-            tree.add(["Vesicular_2", "Vesicular (full of holes)", "..."], "Igneous_1");
+            tree.add(["CoarseGrain_2", "Coarse Grained (seen by eyes)", "What color is it?"], "Igneous_1");
+            tree.add(["FineGrain_2", "Fine Grained", "What color is it?"], "Igneous_1");
+            tree.add(["Glassy_2", "Glassy", "What color is it?"], "Igneous_1");
+            tree.add(["LargeCrystals_2", "Large Cystals (Inside Mass)", "What color is it?"], "Igneous_1");
+            tree.add(["Vesicular_2", "Vesicular (full of holes)", "What color is it?"], "Igneous_1");
             
-            tree.add(["LightGreen_3", "Light Green", ["https://drive.google.com/open?id=0B5nvT8YcYd2qdk1MMEdkSUxEc0U"]], "CoarseGrain_2");
+            tree.add(["LightGreen_3", "Light Green", "Peridotite"], "CoarseGrain_2");
             tree.add(["InterColor_3", "Intermediate Color", "..."], "CoarseGrain_2");
             tree.add(["DarkColor_3", "Dark Color", "..."], "CoarseGrain_2");
+			tree.add(["LightColor_3", "Light Color", "..."], "CoarseGrain_2")
             
-            tree.add(["Pepper&Salt_4", "Pepper & Salt, black 50/50", ["https://drive.google.com/open?id=0B5nvT8YcYd2qTFA3MXZRWnFXNmc"]], "InterColor_3");
-            tree.add(["DarkGray_4", "Dark Gray to Black", ["https://drive.google.com/open?id=0B5nvT8YcYd2qLWR6b2ctb2F0bnM"]], "DarkColor_3");
+            tree.add(["Pepper&Salt_4", "Pepper & Salt, black 50/50", "Diorite"], "InterColor_3");
+            tree.add(["DarkGray_4", "Dark Gray to Black", "Grabbro"], "DarkColor_3");
+			
+			tree.add(["WGP2_4", "White, Gray, Pink", "Granite"], "LightColor_3");
             
             tree.add(["LightFine_3", "Light Color", "..."], "FineGrain_2");
             tree.add(["InterFine_3", "Intermediate Color", "..."], "FineGrain_2");
             tree.add(["DarkFine_3", "Dark Color", "..."], "FineGrain_2");
             
-            tree.add(["WGP_4", "White, Gray, Pink", ["https://drive.google.com/open?id=0B5nvT8YcYd2qTzVHT092Z1JBUlE"]], "LightFine_3");
-            tree.add(["DG_4", "Dark Gray (can vary)", ["https://drive.google.com/open?id=0B5nvT8YcYd2qblpNNk5DZlJfc3c"]], "InterFine_3");
-            tree.add(["DG2_4", "Dark Gray to Black", ["https://drive.google.com/open?id=0B5nvT8YcYd2qUGx4SW9ON3JsMUU"]], "DarkFine_3");
+            tree.add(["WGP_4", "White, Gray, Pink", "Rhyoite"], "LightFine_3");
+            tree.add(["DG_4", "Dark Gray (can vary)", "Andesite"], "InterFine_3");
+            tree.add(["DG2_4", "Dark Gray to Black", "Basalt"], "DarkFine_3");
             
             tree.add(["BRB_3", "Black, Red, Brown", "..."], "Glassy_2");
             
-            tree.add(["Breaks_4", "Breaks along smooth surface", ["https://drive.google.com/open?id=0B5nvT8YcYd2qOXlMVWxrOGFHNnM"]], "BRB_3");
+            tree.add(["Breaks_4", "Breaks along smooth surface", "Obsidian"], "BRB_3");
             
-            tree.add(["LightCrystal_3", "Light", ["https://drive.google.com/open?id=0B5nvT8YcYd2qUXJUekFaazljbk0"]], "LargeCrystals_2");
-            tree.add(["InterCrystal_3", "Intermediate", ["https://drive.google.com/open?id=0B5nvT8YcYd2qZ0w1YjJRWHBsN3c"]], "LargeCrystals_2");
-            tree.add(["DarkCrystal_3", "Dark", ["https://drive.google.com/open?id=0B5nvT8YcYd2qWksyUVB1TFFKcEk"]], "LargeCrystals_2");
+            tree.add(["LightCrystal_3", "Light", "Rhyolite Porphory"], "LargeCrystals_2");
+            tree.add(["InterCrystal_3", "Intermediate", "Andesite Porpyry"], "LargeCrystals_2");
+            tree.add(["DarkCrystal_3", "Dark", "Basalt Porpury"], "LargeCrystals_2");
             
             tree.add(["LightVes_3", "Light color & weight", "..."], "Vesicular_2");
             tree.add(["DarkVes_3", "Dark Color", "How heavy?"], "Vesicular_2");
             
-            tree.add(["WTGVes_4", "White to Gray", ["https://drive.google.com/open?id=0B5nvT8YcYd2qWXdQRmtkME0wZnc"]], "LightVes_3");
+            tree.add(["WTGVes_4", "White to Gray", "Pumice"], "LightVes_3");
             
-            tree.add(["LWVes_4", "Light Weight", ["https://drive.google.com/open?id=0B5nvT8YcYd2qckRTUGJtajBxQWs"]], "DarkVes_3");
-            tree.add(["HeavyVes_4", "Heavy", ["https://drive.google.com/open?id=0B5nvT8YcYd2qckRTUGJtajBxQWs"]], "DarkVes_3");
+            tree.add(["LWVes_4", "Light Weight", "Scoria"], "DarkVes_3");
+            tree.add(["HeavyVes_4", "Heavy", "Vesicular Basalt \n"], "DarkVes_3");
             buttonNamesArray(tree._root.children[0]);
         </script>
 
