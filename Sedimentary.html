@@ -1,13 +1,47 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Javascript test</title>
-        <meta charset="utf-8"/>
-		<a href="http://127.0.0.1:60239/index.html">Return<<</a>
-		<p><a href="http://127.0.0.1:60239/Sedimentary%20questions.html">Reset questions</a></p>
-    </head>
-    <body>
-        <script language="JavaScript">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by TEMPLATED
+http://templated.co
+Released for free under the Creative Commons Attribution License
+Name       : MetroBiz 
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20140207
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>What Rock Ya Got - Sedimentary</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+<!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+
+</head>
+<body>
+<div id="header-wrapper">
+	<div id="header" class="container">
+		<div id="logo">
+			<h1 style="color : white;">What Rock Ya Got</h1>
+			<span>Sedimentary Rock</span>
+		</div>
+		<p style="background-color : white; color : white">nosey little fucker aren't ya</p>
+	</div>
+</div>
+<div id="wrapper2" class="container">
+<p><a href="http://127.0.0.1:60239/index.html">Return<<</a> </p>
+		<p><a href="http://127.0.0.1:60239/Sedimentary%20questions.html">Reset test</a></p>
+
+</div>
+
+<div id="copyright" class="container">
+	<p>&copy; Made by team JavaThehutt | Kent Hackathon | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
+</body>
+		<script language="JavaScript">
             <!--
             function silentErrorHandler() {return true;}
             window.onerror=silentErrorHandler;
@@ -37,10 +71,14 @@
             function buttonNamesArray(node){
                 
                 // print out question from node //
-                var q = document.createElement("p");
+                var q = document.createElement("h1");
                 var t = document.createTextNode(node.data[2]);
                 q.appendChild(t);
-                document.body.appendChild(q);
+               
+				//!!!
+				document.getElementById("wrapper2").appendChild(q);
+		
+		window.scrollTo(0,document.body.scrollHeight);
                 
                 console.log(node.children);
                 list = node.children;
@@ -64,7 +102,8 @@
             function eventThing(i, node){
                     next = node.children[i];
                     let option = newButton(next.data[1]);
-                    document.body.appendChild(option);
+                   // !!
+				document.getElementById("wrapper2").appendChild(option);
                     option.setAttribute("class", "button");
                     option.id = node.children[i].data[0];
                     //option.setAttribute("onClick", "execute()");
@@ -146,27 +185,27 @@
                     throw new Error('Cannot add node to a non-existent parent.');
                 }
             };
-			
-			            // declaring our data tree
+            
+                        //      The Thing that does the things      //
+            // declaring our data tree
             var tree = new Tree(["root", "", "What kind of rock do you have?"]);
+            // calling the root of our data tree
             
-            
-            //      Library     //
-            
-            tree.add(["Sedimentary_1", "Sedimentary", "Does this rock react with acid"], "root");
+            // Library //
+			tree.add(["Sedimentary_1", "Sedimentary", "Does this rock react with acid"], "root");
 
             
             //      Sedimentary Rocks   //
             
             tree.add(["Acid_2", "Reacts to acid", "Does this rock need to be powered to react w/ HCL?"], "Sedimentary_1");
-            tree.add(["NotAcid_2", "Does not react with acid", "What grains???"], "Sedimentary_1");
+            tree.add(["NotAcid_2", "Does not react with acid", "What is the grain size/texture?"], "Sedimentary_1");
             
             tree.add(["RPTR~3", "Rock must be broken up into a powder to react", "..."], "Acid_2");
-            tree.add(["NRPTR~3", "Rock does not need to be powdered to react", "..."], "Acid_2");
+            tree.add(["NRPTR~3", "Rock does not need to be powdered to react", "What is the appearance?"], "Acid_2");
             
             tree.add(["LGTW~4", "dwl luster, gray, tar, white, may be other colors", "Dolomite"], "RPTR~3");
             
-            tree.add(["AFP~4", "Abundant fossils present", "..."], "NRPTR~3");
+            tree.add(["AFP~4", "Abundant fossils present", "What is the composition?"], "NRPTR~3");
             tree.add(["MS~4", "miniature spheres, like tiny pears; white gray common", "oolitic limestone"], "NRPTR~3");
             tree.add(["WPG~4", "white powdery, feels gritty", "chafe limestone"], "NRPTR~3");
             tree.add(["GFSD~4", "Fine grained, smooth, dense, irregular, blocky", "micrite limestone"], "NRPTR~3");
@@ -174,18 +213,18 @@
             tree.add(["FGM~5", "Fine grained matrix w/ many fossils", "fossil limestone"], "AFP~4");
             tree.add(["PLWBS~5", "Porous, light weight, broken shell fragments, tan to white", "coquina"], "AFP~4");
             
-            tree.add(["GVRG~3", "Grains visible or rock feels gritty", "..."], "NotAcid_2");
-            tree.add(["NGMFG~3", "No Grains, may feel gritty or glassy", "..."], "NotAcid_2");
+            tree.add(["GVRG~3", "Grains visible or rock feels gritty", "Is the main mass of rock visible?"], "NotAcid_2");
+            tree.add(["NGMFG~3", "No Grains, may feel gritty or glassy", "What is the texture?"], "NotAcid_2");
             tree.add(["BLWS~3", "Black, light weight, smudgy, or shiny", "coal"], "NotAcid_2");
-            tree.add(["WPCC~3", "White, pink, clear crystals", "..."], "NotAcid_2");
+            tree.add(["WPCC~3", "White, pink, clear crystals", "Color and taste(don't go around licking rocks though)"], "NotAcid_2");
             
-            tree.add(["NV~4", "Gravel actual rock, not visible", "..."], "GVRG~3");
+            tree.add(["NV~4", "Gravel actual rock, not visible", "What is the shape of the grain?"], "GVRG~3");
             tree.add(["V~4", "Gravel, but rock still visible", "..."], "GVRG~3");
             
             tree.add(["AGG~5", "Angular Gravel Grains", "Breccia"], "NV~4");
             tree.add(["RGG~5", "Rounded Gravel Grains", "conglomerate"], "NV~4");
             
-            tree.add(["GDV~5", "Grains distinct and visible", "Sandstonie"], "V~4");
+            tree.add(["GDV~5", "Grains distinct and visible", "Sandstone"], "V~4");
             
             tree.add(["FGNP~4", "Feels Gritty, no particles even under microsope", "Silt Stone"], "NGMFG~3");
             tree.add(["SCG~4", "Smooth curves, glassy, durl laster many colors", "chert"], "NGMFG~3");
@@ -202,6 +241,8 @@
             // calling the root of our data tree
             buttonNamesArray(tree._root.children[0]);
             
-        </script>       
-    </body>
+        </script>
+
 </html>
+
+
