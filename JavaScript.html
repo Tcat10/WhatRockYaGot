@@ -17,8 +17,11 @@
              * @author Lars Dreith
              * October 7th, 2017
              */
+            
+            
              //imported from code.stephenmorley.org
             function Queue(){var a=[],b=0;this.getLength=function(){return a.length-b};this.isEmpty=function(){return 0==a.length};this.enqueue=function(b){a.push(b)};this.dequeue=function(){if(0!=a.length){var c=a[b];2*++b>=a.length&&(a=a.slice(b),b=0);return c}};this.peek=function(){return 0<a.length?a[b]:void 0}};
+            
             
             // produce a button object
             function newButton(text){
@@ -31,7 +34,7 @@
             // One cycle of our program
             function buttonNamesArray(node){
                 
-                // print out question from node
+                // print out question from node //
                 var q = document.createElement("p");
                 var t = document.createTextNode(node.data[2]);
                 q.appendChild(t);
@@ -40,9 +43,9 @@
                 console.log(node.children);
                 list = node.children;
                 
-                // make buttons for each child of node
+                // make buttons for each child of node //
                 
-                // basically copied from some stack exchange website lol
+                // basically copied from some random stack exchange website lol
                 var funcs = [];
                 function createfunc(i){
                     return eventThing(i, node);
@@ -56,7 +59,7 @@
             }
 
             
-            // 
+            // a function so that the other function doesn't actually become incomprehensible
             function eventThing(i, node){
                     next = node.children[i];
                     let option = newButton(next.data[1]);
@@ -70,7 +73,7 @@
                     }());
             }
             
-            // 
+            // A function so that the other function doesn't actually become incomprehensible
             function handleClick( nodeChild){
                 console.log(nodeChild);
                 document.getElementById(nodeChild.data[0]).style.background = '#9b9b9b';
@@ -87,13 +90,11 @@
                 
                 buttonNamesArray(nodeChild);
             }
-                    
+            
+            // line break constant... necessary???
             const br = document.createElement("br");
 
-            // data is an array of length three:
-            // first entry is the address
-            // second entry is the read-out text
-            // third entry is the question for the next round
+                 //      Node, Tree, and their relevant methods to build the data tree!      //
             function Node(data){
                 this.data = data;
                 this.parent = null;
@@ -146,10 +147,13 @@
                 }
             };
             
-            
-            
-            
+                        //      The Thing that does the things      //
+
+            // declaring our data tree
             var tree = new Tree(["root", "", "What kind of rock do you have?"]);
+            // calling the root of our data tree
+            buttonNamesArray(tree._root);
+            
             
             //      Library     //
             
@@ -255,12 +259,6 @@
             tree.add(["LWVes_4", "Light Weight", "Scoria"], "DarkVes_3");
             tree.add(["HeavyVes_4", "Heavy", "Vesicular Basalt \n"], "DarkVes_3");
 
-            //      The Thing that does the things      //
-
-            buttonNamesArray(tree._root);
             
-            
-            // correct it so that the button background color changes when selected, and you can no longer click the buttons on levels already chosen.
-        </script>
     </body>
 </html>
