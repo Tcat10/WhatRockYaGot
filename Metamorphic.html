@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Javascript test</title>
+        <meta charset="utf-8"/>
+		<a href="http://127.0.0.1:60239/index.html">Return<<</a>
+		<p><a href="http://127.0.0.1:60239/Metamorphic%20questions.html">Reset questions</a></p>
+    </head>
+    <body>
+        <script language="JavaScript">
+            <!--
+            function silentErrorHandler() {return true;}
+            window.onerror=silentErrorHandler;
+            //-->
+            
+            /**
+             * Produce and run through data trees for rocks!
+             *
+             * @author Lars Dreith
+             * October 7th, 2017
+             */
+            
+            
+             //imported from code.stephenmorley.org
+            function Queue(){var a=[],b=0;this.getLength=function(){return a.length-b};this.isEmpty=function(){return 0==a.length};this.enqueue=function(b){a.push(b)};this.dequeue=function(){if(0!=a.length){var c=a[b];2*++b>=a.length&&(a=a.slice(b),b=0);return c}};this.peek=function(){return 0<a.length?a[b]:void 0}};
+            
+            
+            // produce a button object
+            function newButton(text){
+                var btn = document.createElement("Button");
+                var t = document.createTextNode(text);
+                btn.appendChild(t);
+                return btn;
+            }
+            
+            // One cycle of our program
+            function buttonNamesArray(node){
+                
+                // print out question from node //
+                var q = document.createElement("p");
+                var t = document.createTextNode(node.data[2]);
+                q.appendChild(t);
+                document.body.appendChild(q);
+                
+                console.log(node.children);
+                list = node.children;
+                
+                // make buttons for each child of node //
+                
+                // basically copied from some random stack exchange website lol
+                var funcs = [];
+                function createfunc(i){
+                    return eventThing(i, node);
+                }
+                for( var i = 0; i < node.children.length; i++){
+                    funcs[i] = createfunc(i);
+                }
+                for (var j = 0; j < node.children.length; j++){
+                    funcs[j]();
+                }    
+            }
+            
+            // a function so that the other function doesn't actually become incomprehensible
+            function eventThing(i, node){
+                    next = node.children[i];
+                    let option = newButton(next.data[1]);
+                    document.body.appendChild(option);
+                    option.setAttribute("class", "button");
+                    option.id = node.children[i].data[0];
+                    //option.setAttribute("onClick", "execute()");
+                    console.log(node);
+                    (function(){
+                        document.getElementById(node.children[i].data[0]).addEventListener('click', function(){handleClick(node.children[i]);});
+                    }());
+            }
+            
+            // A function so that the other function doesn't actually become incomprehensible
+            function handleClick( nodeChild){
+                console.log(nodeChild);
+                document.getElementById(nodeChild.data[0]).style.background = '#9b9b9b';
+                
+                // stops old buttons from being clicked
+                var x = document.getElementsByClassName("button");
+                for( i = 0; i < x.length; i++ ){
+                    var clone = x[i].cloneNode();
+                    while (x[i].firstChild) {
+                        clone.appendChild(x[i].lastChild);
+                    }
+                    x[i].parentNode.replaceChild(clone, x[i]);
+                }
+                
+                buttonNamesArray(nodeChild);
+            }
+            
+            // line break constant... necessary???
+            const br = document.createElement("br");
+                 //      Node, Tree, and their relevant methods to build the data tree!      //
+            function Node(data){
+                this.data = data;
+                this.parent = null;
+                this.children = [];
+            }
+            
+            function Tree(data){
+                var node = new Node(data);
+                this._root = node;
+            }
+            
+            
+            Tree.prototype.traverseBF = function(callback) {
+                var queue = new Queue();
+     
+                queue.enqueue(this._root);
+ 
+                currentTree = queue.dequeue();
+ 
+                while(currentTree){
+                    for (var i = 0, length = currentTree.children.length; i < length; i++) {
+                        queue.enqueue(currentTree.children[i]);
+                    }
+ 
+                    callback(currentTree);
+                    currentTree = queue.dequeue();
+                }
+            };
+            
+            Tree.prototype.contains = function(callback, traversal) {
+                traversal.call(this, callback);
+            };
+            
+            Tree.prototype.add = function(data, toData) {
+                var child = new Node(data),
+                    parent = null,
+                    callback = function(node) {
+                        if (node.data[0] === toData) {
+                            parent = node;
+                        }
+                };
+ 
+                this.contains(callback, tree.traverseBF);
+ 
+                if (parent) {
+                    parent.children.push(child);
+                    child.parent = parent;
+                } else {
+                    throw new Error('Cannot add node to a non-existent parent.');
+                }
+            };
+            
+            // declaring our data tree
+            var tree = new Tree(["root", "", "What kind of rock do you have?"]);
+            
+            //      Library     //
+           
+            tree.add(["Metamorphic_1", "Metamorphic", "Is this rock foliated?"], "root");
+            
+            
+            //      Metamorphic Rocks   //
+            
+            tree.add(["Foliated+2", "Foliated (banded)", "Grain?"], "Metamorphic_1");
+            tree.add(["NFoliated+2", "Not foliated (unbanded)", "grain?"], "Metamorphic_1");
+            
+            tree.add(["FG+3", "Fine grained", "Slate"], "Foliated+2");
+            tree.add(["MCG+3", "Medium to coarse grain", "..."], "Foliated+2");
+            
+            tree.add(["MPM+4", "Mica Prominent, May Contain Garnet", "Schist"], "MCG+3");
+            tree.add(["CDLB+4", "Contains Dark to Light Bands", "Gneiss"], "MCG+3");
+            
+            tree.add(["MCGNF+3", "Medium to coarse grain", "..."], "NFoliated+2");
+            tree.add(["FGNF+3", "Fine Grained", "..."], "NFoliated+2");
+            
+            tree.add(["COQ+4", "Composed of quartz", "Quartzite"], "MCGNF+3");
+            tree.add(["COC+4", "Composed of Calicite", "Marble"], "MCGNF+3");
+            
+            tree.add(["CDS+4", "Contains Dark Spots", "..."], "FGNF+3");
+            
+            tree.add(["SR+5", "Spotted Rock", "Hornfel"], "CDS+4");
+            
+            
+                                    //      The Thing that does the things      //
+            // calling the root of our data tree
+            buttonNamesArray(tree._root.children[0]);
+            
+        </script>       
+    </body>
+</html>
